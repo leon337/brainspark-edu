@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agente 1 | BrainSpark EDU</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Agente 1 - BrainSpark EDU</h1>
+        <nav>
+            <a href="/">Início</a> |
+            <a href="/historico">Histórico</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>{{ acao }}</h2>
+
+        <form method="POST" action="/agente1">
+            <label for="tema">Digite um tema para criar uma ideia:</label><br><br>
+            <input type="text" id="tema" name="tema" required>
+            <button type="submit">Gerar Ideia</button>
+        </form>
+
+        {% if resultado %}
+        <h3>Resultado:</h3>
+        <pre style="background: #f9f9f9; padding: 15px; border-radius: 8px; font-size: 1rem;">{{ resultado }}</pre>
+        {% endif %}
+    </main>
+</body>
+</html>
