@@ -10,8 +10,8 @@ def agente1():
         tema = request.form.get("tema")
 
         prompt = (
-            f"Crie um conteúdo educativo em português com esse formato:\n"
-            f"Título:\nIntrodução:\nSeção 1:\nSeção 2:\nSeção 3:\n\n"
+            f"Crie um conteúdo educativo em português sobre o tema abaixo com:\n"
+            f"Título, Introdução, Seção 1, Seção 2, Seção 3.\n\n"
             f"Tema: {tema}\n"
         )
 
@@ -27,7 +27,7 @@ def agente1():
 
         try:
             response = requests.post(
-                "https://api-inference.huggingface.co/models/google/flan-t5-small",
+                "https://api-inference.huggingface.co/models/mrm8488/t5-base-finetuned-question-generation-ap",
                 headers=headers,
                 json=payload
             )
