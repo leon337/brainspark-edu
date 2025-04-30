@@ -27,7 +27,7 @@ def agente1():
 
         try:
             response = requests.post(
-                "https://api-inference.huggingface.co/models/google/flan-t5-base",
+                "https://api-inference.huggingface.co/models/google/flan-t5-small",
                 headers=headers,
                 json=payload
             )
