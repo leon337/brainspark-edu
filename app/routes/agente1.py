@@ -34,6 +34,14 @@ def agente1():
 
             if response.status_code == 200:
                 resultado = response.json()[0]['generated_text']
+            elif response.status_code == 402:
+                resultado = (
+                    "⚠️ Erro 402: Você atingiu o limite gratuito da API Hugging Face. "
+                    "Para continuar usando, é necessário:\n"
+                    "1. Gerar uma nova chave em huggingface.co\n"
+                    "2. Esperar o reset diário (caso esteja em plano gratuito)\n"
+                    "3. Trocar para outro modelo ou rodar localmente."
+                )
             else:
                 resultado = f"Erro ao acessar a API: {response.status_code}"
         except Exception as e:
