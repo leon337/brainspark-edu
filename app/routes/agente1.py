@@ -1,10 +1,7 @@
+from flask import request, render_template
+from app import app
 import requests
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
-
-HF_API_KEY = "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"
-MODEL = "HuggingFaceH4/zephyr-7b-beta"
+import os
 
 @app.route("/agente1", methods=["GET", "POST"])
 def agente1():
@@ -18,11 +15,11 @@ def agente1():
         }
 
         headers = {
-            "Authorization": f"Bearer {HF_API_KEY}"
+            "Authorization": f"Bearer {app.config['HUGGINGFACE_TOKEN']}"
         }
 
         response = requests.post(
-            f"https://api-inference.huggingface.co/models/{MODEL}",
+            "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
             headers=headers,
             json=payload
         )
@@ -31,8 +28,5 @@ def agente1():
             resultado = response.json()[0]['generated_text']
         else:
             resultado = f"Erro ao acessar a API: {response.status_code}"
-            
 
     return render_template("agente1.html", acao="Criação de ideias de conteúdo", resultado=resultado)
-if __name__ == "__main__":
-    app.run(debug=True)
