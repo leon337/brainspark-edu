@@ -10,14 +10,14 @@ def agente1():
         tema = request.form.get("tema")
 
         prompt = (
-            f"Crie uma ideia de conteúdo educativa, em português, estruturada assim:\n\n"
+            f"Crie um conteúdo educativo em português com esse formato:\n"
             f"Título:\nIntrodução:\nSeção 1:\nSeção 2:\nSeção 3:\n\n"
             f"Tema: {tema}\n"
         )
 
         payload = {
             "inputs": prompt,
-            "parameters": {"max_new_tokens": 500},
+            "parameters": {"max_new_tokens": 300},
             "options": {"wait_for_model": False}
         }
 
@@ -27,7 +27,7 @@ def agente1():
 
         try:
             response = requests.post(
-                "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
+                "https://api-inference.huggingface.co/models/google/flan-t5-base",
                 headers=headers,
                 json=payload
             )
