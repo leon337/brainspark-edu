@@ -11,7 +11,8 @@ def agente1():
 
         payload = {
             "inputs": f"Crie uma ideia de conteúdo para o tema: {tema}",
-            "parameters": {"max_new_tokens": 200}
+            "parameters": {"max_new_tokens": 200},
+            "options": {"wait_for_model": False}
         }
 
         headers = {
