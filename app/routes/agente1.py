@@ -9,9 +9,15 @@ def agente1():
     if request.method == "POST":
         tema = request.form.get("tema")
 
+        prompt = (
+            f"Crie uma ideia de conteúdo educativa, em português, estruturada assim:\n\n"
+            f"Título:\nIntrodução:\nSeção 1:\nSeção 2:\nSeção 3:\n\n"
+            f"Tema: {tema}\n"
+        )
+
         payload = {
-            "inputs": f"Crie uma ideia de conteúdo para o tema: {tema}",
-            "parameters": {"max_new_tokens": 200},
+            "inputs": prompt,
+            "parameters": {"max_new_tokens": 500},
             "options": {"wait_for_model": False}
         }
 
@@ -19,15 +25,18 @@ def agente1():
             "Authorization": f"Bearer {app.config['HUGGINGFACE_TOKEN']}"
         }
 
-        response = requests.post(
-            "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
-            headers=headers,
-            json=payload
-        )
+        try:
+            response = requests.post(
+                "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta",
+                headers=headers,
+                json=payload
+            )
 
-        if response.status_code == 200:
-            resultado = response.json()[0]['generated_text']
-        else:
-            resultado = f"Erro ao acessar a API: {response.status_code}"
+            if response.status_code == 200:
+                resultado = response.json()[0]['generated_text']
+            else:
+                resultado = f"Erro ao acessar a API: {response.status_code}"
+        except Exception as e:
+            resultado = f"Erro inesperado: {str(e)}"
 
     return render_template("agente1.html", acao="Criação de ideias de conteúdo", resultado=resultado)
