@@ -2,32 +2,47 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agente 1 | BrainSpark EDU</title>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <title>Agente 1 - BrainSpark EDU</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background-color: #f8f8f8; }
+        h1 { color: #333; }
+        a { margin-right: 20px; color: #007bff; text-decoration: none; }
+        form { margin-top: 20px; }
+        input[type="text"] { padding: 8px; width: 300px; }
+        button { padding: 8px 16px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        .resultado { background: #fff; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+        .resultado h2 { color: #007bff; }
+        .bloco { margin-bottom: 15px; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Agente 1 - BrainSpark EDU</h1>
-        <nav>
-            <a href="/">Início</a> |
-            <a href="/historico">Histórico</a>
-        </nav>
-    </header>
+    <h1>Agente 1 - BrainSpark EDU</h1>
+    <a href="/">Início</a>
+    <a href="/historico">Histórico</a>
 
-    <main>
-        <h2>{{ acao }}</h2>
+    <h2>Criação de ideias de conteúdo</h2>
 
-        <form method="POST" action="/agente1">
-            <label for="tema">Digite um tema para criar uma ideia:</label><br><br>
-            <input type="text" id="tema" name="tema" required>
-            <button type="submit">Gerar Ideia</button>
-        </form>
+    <form method="post">
+        <label for="tema">Digite um tema para criar uma ideia:</label><br>
+        <input type="text" id="tema" name="tema" required>
+        <button type="submit">Gerar Ideia</button>
+    </form>
 
-        {% if resultado %}
-        <h3>Resultado:</h3>
-        <pre style="background: #f9f9f9; padding: 15px; border-radius: 8px; font-size: 1rem;">{{ resultado }}</pre>
-        {% endif %}
-    </main>
+    {% if resultado %}
+        <div class="resultado">
+            <h2>Resultado:</h2>
+            {% for linha in resultado.split('\n') %}
+                {% if linha.startswith('Title:') %}
+                    <div class="bloco"><strong>{{ linha }}</strong></div>
+                {% elif linha.startswith('Introduction:') %}
+                    <div class="bloco"><strong>{{ linha }}</strong></div>
+                {% elif linha.startswith('Segment') %}
+                    <div class="bloco"><u>{{ linha }}</u></div>
+                {% else %}
+                    <div class="bloco">{{ linha }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
 </body>
 </html>
